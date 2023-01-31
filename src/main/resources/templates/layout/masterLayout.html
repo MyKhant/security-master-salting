@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html th:fragment="layout(main)" lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+     th:href="@{/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark text-light mb-5">
+        <a href="#" class="navbar-brand">Spring Security</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+        data-target="#myNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="myNav" class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a th:href="@{/}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/customer/customers}" class="nav-link">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/employees}" class="nav-link">Employees</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/departments}" class="nav-link">Departments</a>
+                </li>
+            </ul>
+            <div sec:authorize="!isAuthenticated()">
+                <a th:href="@{/login}" class="mr-2">Login</a>
+                <a th:href="@{/account/register}">Register</a>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <a th:href="@{/account/accounts}" class="mr-2">Account</a>
+                <a href="javascript: document.logoutForm.submit()">Logout</a>
+                <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                    <input hidden type="submit" value="Sign Out">
+                </form>
+            </div>
+        </div>
+
+    </nav>
+
+    <div th:replace="${main}" class="my-5"></div>
+
+    <footer>
+        <div class="p-5 bg-dark text-light d-flex
+        justify-content-center align-content-center">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="lead">Spring Security Master &copy; JDC </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
